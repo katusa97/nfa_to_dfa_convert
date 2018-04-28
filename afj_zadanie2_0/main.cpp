@@ -16,7 +16,7 @@ bool nextDKA(char pis, stavDKA* vstupny_stav, stavDKA* vystupny_stav, vector <st
 
 int main()
 {
-    string sFile_Path = "/Users/katka_pc/Desktop/rules4.txt";
+    string sFile_Path = "/Users/katka_pc/Desktop/rules5.txt";
     string vPravidla;
 
     vector<char> abeceda;
@@ -52,57 +52,96 @@ int main()
         }
     }
 
-/*    int index = 0;
-    stavDKA* stav1 = new stavDKA();
-    if (nextDKA('a',prvy,stav1,stavyDKA)){
-        cout<<"novy stav prvy->a"<<endl;
-    }
+    vector<stavDKA*> na_prejdenie;
+    na_prejdenie.push_back(prvy);
 
-    stavDKA* stav2 = new stavDKA();
-    if (nextDKA('c',prvy,stav2,stavyDKA)){
-        cout<<"novy stav prvy->c"<<endl;
-    }
+    cout<< abeceda.size() << endl;
+        while(true){
 
-    /*set<string> ll = prvy->prechody.begin()->second->getNames();
-    for(auto const &tmp : ll)
-    {
-        cout << tmp << endl;
-    }*/
-
-  /*  cout << "_____________________ VYPOCET PRE STAV 2 _____________________" << endl;
-    stavDKA* stav3 = new stavDKA();
-    if (nextDKA('a',stav2,stav3,stavyDKA)){
-        cout<<"novy stav"<<endl;
-    }
-    else
-    {
-        cout << "dalsi stav neni alebo uz existuje" << endl;
-    }
-
-    set<string> llo = stav2->prechody.begin()->second->getNames();
-    for(auto const &tmp : llo)
-    {
-        cout << tmp << endl;
-    }
-*/
-
-
-    while(true){
-        cout << "testing while" << endl;
-        stavDKA* stav = new stavDKA();
+        //cout << "testing while" << endl;
+        stavDKA* akt = na_prejdenie[0];
+        na_prejdenie.erase(na_prejdenie.begin());
+        //cout << "velkost na prejdenie : " << na_prejdenie.size() << endl;
 
         for(int i=0; i< abeceda.size();i++){
-            if(nextDKA(abeceda[i],stavyDKA[index],stav)){
-                stavyDKA.push_back(stav);
+            stavDKA* stav = new stavDKA();
+            if(nextDKA(abeceda[i],akt, stav, stavyDKA)){
+                na_prejdenie.push_back(stav);
+                cout << "pocet " <<  abeceda[i] << endl;
             }
         }
 
-        index++;
-        if(index == stavyDKA.size())
+        //cout << "velkost na prejdenie : " << na_prejdenie.size() << endl;
+        //delete stav;
+
+        if(na_prejdenie.empty())
             break;
-        delete stav;
     }
 
+    cout << stavyDKA.size() << endl;
+
+    cout << "DKA AUTOMAT" << endl;
+
+    for (std::vector<stavDKA*>::iterator it = stavyDKA.begin() ; it != stavyDKA.end(); ++it)
+    {
+        cout << "NAZOV STAVU DKA  -" ;
+        for(auto const &tmp : (*it)->getNames())
+        {
+            cout << " " << tmp;
+        }
+        cout << "-" << endl;
+
+        cout << "JEHO PRECHODY" << endl;
+        for(auto const &tmp2 : (*it)->getPrechody())
+        {
+            cout << tmp2.first << " ";
+
+            for(auto const &tmp3 : tmp2.second->getNames())
+            {
+                cout << "-" << tmp3;
+            }
+
+            cout << endl;
+        }
+    }
+
+
+
+
+
+        /*    int index = 0;
+            stavDKA* stav1 = new stavDKA();
+            if (nextDKA('a',prvy,stav1,stavyDKA)){
+                cout<<"novy stav prvy->a"<<endl;
+            }
+
+            stavDKA* stav2 = new stavDKA();
+            if (nextDKA('c',prvy,stav2,stavyDKA)){
+                cout<<"novy stav prvy->c"<<endl;
+            }
+
+            /*set<string> ll = prvy->prechody.begin()->second->getNames();
+            for(auto const &tmp : ll)
+            {
+                cout << tmp << endl;
+            }*/
+
+          /*  cout << "_____________________ VYPOCET PRE STAV 2 _____________________" << endl;
+            stavDKA* stav3 = new stavDKA();
+            if (nextDKA('a',stav2,stav3,stavyDKA)){
+                cout<<"novy stav"<<endl;
+            }
+            else
+            {
+                cout << "dalsi stav neni alebo uz existuje" << endl;
+            }
+
+            set<string> llo = stav2->prechody.begin()->second->getNames();
+            for(auto const &tmp : llo)
+            {
+                cout << tmp << endl;
+            }
+        */
 
     //set <string> skuska;
 
@@ -252,7 +291,7 @@ bool load_rules(string file_name, int &nSize_X, int &nSize_Y,vector <char> &abec
                 {
                   poc = true;
 
-                   if(str.at(pos+2) == 'F')
+                   if(str.at(pos+1) == *str.end() && str.at(pos+2) == 'F')
                    {
                        akc = true;
                    }

@@ -25,8 +25,12 @@ public:
 
     set<string> getNames() const;
     void setNames(const set<string> &value);
+
     bool getPociatocny() const;
     void setPociatocny(bool value);
+
+    set<pair<char, stavDKA *> > getPrechody() const;
+    void setPrechody(const set<pair<char, stavDKA *> > &value);
 };
 
 #endif // STAVDKA_H

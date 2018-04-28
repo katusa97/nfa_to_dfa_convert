@@ -44,3 +44,13 @@ void stavDKA::add_prechod(char vs_sym, stavDKA *stavu)
     prechod = make_pair(vs_sym,stavu);
     this->prechody.insert(prechod);
 }
+
+set<pair<char, stavDKA *> > stavDKA::getPrechody() const
+{
+    return prechody;
+}
+
+void stavDKA::setPrechody(const set<pair<char, stavDKA *> > &value)
+{
+    prechody = value;
+}
