@@ -88,7 +88,7 @@ int main()
 
 
     while(true){
-
+        cout << "testing while" << endl;
         stavDKA* stav = new stavDKA();
 
         for(int i=0; i< abeceda.size();i++){
